@@ -91,6 +91,101 @@ void Postorder_traveral(node *r)
     }
 }
 
+void level_traversal(node *r)
+{
+    queue<node*> q;
+    cout<<r->data<<" ";
+    q.emplace(r);
+    node *p;
+
+    while(!q.empty())
+    {
+        p = q.front();
+        q.pop();
+        if(p->left)
+        {
+            cout<<p->left->data<<" ";
+            q.emplace(p->left);
+        }
+        if(p->right)
+        {
+            cout<<p->right->data<<" ";
+            q.emplace(p->right);
+        }
+    }
+}
+
+void Iterative_Preorder_traversal(node *p)
+{
+    stack<node*> s;
+    while(p!=NULL || !s.empty())
+    {
+        if(p)
+        {
+            cout<<p->data<<" ";
+            s.push(p);
+            p=p->left;
+        }
+        else
+        {
+            p = s.top();
+            s.pop();
+            p = p->right;
+        }
+    }
+}
+
+void Iterative_Inorder_traversal(node *p)
+{
+    stack<node*> s;
+    while(p!=NULL || !s.empty())
+    {
+        if(p)
+        {
+            // cout<<p->data<<" ";
+            s.push(p);
+            p=p->left;
+        }
+        else
+        {
+            p = s.top();
+            s.pop();
+            cout<<p->data<<" ";
+            p = p->right;
+        }
+    }
+}
+
+void Iterative_Postorder_traversal(node *p)
+{
+    stack<long long> s;
+    long long address;
+
+    while(p!=NULL || !s.empty())
+    {
+        if(p)
+        {
+            s.push((long long)p);
+            p = p->left;
+        }
+        else
+        {
+            address = (long long)s.top();
+            s.pop();
+            if(address>0)
+            {
+                s.push(-address);
+                p = ((node*)address)->right;
+            }
+            else
+            {
+                cout<<(((node*)(-1*address))->data)<<" ";
+            }
+        }
+        
+    }
+}
+
 int main()
 {
     create();
@@ -99,5 +194,14 @@ int main()
     Inorder_traveral(root);
     cout<<endl;
     Postorder_traveral(root);
+    cout<<endl;
+    level_traversal(root);
+    cout<<endl;
+
+    Iterative_Preorder_traversal(root);
+    cout<<endl;
+    Iterative_Inorder_traversal(root);
+    cout<<endl;
+    Iterative_Postorder_traversal(root);
     cout<<endl;
 }
