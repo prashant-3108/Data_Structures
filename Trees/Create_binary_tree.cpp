@@ -186,6 +186,16 @@ void Iterative_Postorder_traversal(node *p)
     }
 }
 
+void DestroyTree(node *p)
+{
+    if ( p!= nullptr)
+    {
+        DestroyTree(p->left);
+        DestroyTree(p->right);
+        delete p;
+    }
+}
+
 int main()
 {
     create();
@@ -204,4 +214,6 @@ int main()
     cout<<endl;
     Iterative_Postorder_traversal(root);
     cout<<endl;
+
+    DestroyTree(root);
 }
